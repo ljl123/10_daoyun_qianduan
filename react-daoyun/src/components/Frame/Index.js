@@ -1,7 +1,7 @@
 import React from 'react'
 import { Layout, Menu, Breadcrumb, Dropdown, Avatar, message } from 'antd';
 import { UserOutlined, LaptopOutlined, NotificationOutlined } from '@ant-design/icons';
-import { adminRoutes } from '../../routes';
+import { adminRoutes, dicRoutes } from '../../routes';
 import { withRouter } from 'react-router-dom'
 import { clearToken } from '../../utils/auth';
 import './frame.css';
@@ -10,6 +10,7 @@ const { SubMenu } = Menu;
 const { Header, Content, Sider } = Layout;
 
 const routes = adminRoutes.filter(route => route.isShow)
+const dicroute = dicRoutes.filter(route => route.isShow)
 
 function Index(props) {
     const popMenu = (
@@ -68,6 +69,20 @@ function Index(props) {
                                 </Menu.Item>
                             );
                         })}
+                        <SubMenu
+                            key="sub"
+                            title="字典管理"
+
+
+                        >
+                            {dicroute.map(dicroute => {
+                                return (
+                                    <Menu.Item key={dicroute.path} onClick={p => props.history.push(p.key)}>
+                                        {dicroute.title}
+                                    </Menu.Item>
+                                );
+                            })}
+                        </SubMenu>
                     </Menu>
                 </Sider>
                 <Layout style={{ padding: '6px' }}>
@@ -85,6 +100,7 @@ function Index(props) {
                         }}
                     >
                         {props.children}
+
                     </Content>
                 </Layout>
             </Layout>

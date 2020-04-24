@@ -15,26 +15,26 @@ function Login(props) {
     };
     const onFinish = values => {
         console.log('Success:', values);
-        // setToken(values.username);
-        // props.history.push("/admin");
-        loginApi({
-            userName: values.username,
-            password: values.password
-        })
-            .then(res => {
-                //console.log(res);
-                if (res.code === "success") {
-                    message.success("登录成功");
-                    setToken(res.token);
-                    props.history.push("/admin");
-                } else {
-                    message.info(res.message);
-                }
-            })
-            .catch(err => {
-                console.log(err);
-                message.error("用户不存在");
-            });
+        setToken(values.username);
+        props.history.push("/admin");
+        // loginApi({
+        //     userName: values.username,
+        //     password: values.password
+        // })
+        //     .then(res => {
+        //         //console.log(res);
+        //         if (res.code === "success") {
+        //             message.success("登录成功");
+        //             setToken(res.token);
+        //             props.history.push("/admin");
+        //         } else {
+        //             message.info(res.message);
+        //         }
+        //     })
+        //     .catch(err => {
+        //         console.log(err);
+        //         message.error("用户不存在");
+        //     });
     };
 
     const onFinishFailed = errorInfo => {

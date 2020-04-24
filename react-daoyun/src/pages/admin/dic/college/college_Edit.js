@@ -1,35 +1,40 @@
 import React from 'react';
 import { Form, Card, Input, Button, InputNumber } from 'antd'
 
-function Edit(props) {
+function college_Edit(props) {
     const layout = {
         labelCol: { span: 5 },
         wrapperCol: { span: 16 },
     };
+    const validateMessages = {
+        required: '信息不能为空!',
 
+
+    };
 
     const onFinish = values => {
         console.log(values);
     };
 
     return (
-        <Card title="课程编辑">
-            <Form {...layout} name="userEdit" onFinish={onFinish}>
-                <Form.Item name="lesson" label="课程号" rules={[{ required: true }]}>
+        <Card title="学校编辑">
+            <Form {...layout} name="collegeEdit" onFinish={onFinish} validateMessages={validateMessages}>
+                <Form.Item name="value" label="值" rules={[{ required: true }]}>
                     <Input />
                 </Form.Item>
-                <Form.Item name="name" label="课程名" rules={[{ required: true }]}>
+                <Form.Item name="texture" label="文本" rules={[{ required: true }]}>
                     <Input />
                 </Form.Item>
-                <Form.Item name="college" label="学校/学院" rules={[{}]}>
+                <Form.Item name="isDefault" label="默认值" rules={[{ required: true }]}>
                     <Input />
                 </Form.Item>
                 <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 5 }}>
                     <Button type="primary" htmlType="submit">保存</Button>
                 </Form.Item>
+
             </Form>
         </Card>
     )
 }
 
-export default Edit
+export default college_Edit

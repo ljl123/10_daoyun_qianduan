@@ -1,15 +1,25 @@
-import React from 'react';
+import React from 'react'
 import { Card, Table, Button, Popconfirm } from 'antd'
 
 const dataSource = [{
     id: 1,
-    lesson: '123',
-    name: '工程训练',
-    college: '福大/计算机'
-}
-];
+    value: '0',
+    texture: '请选择',
+    isDefault: 'true'
+}, {
+    id: 2,
+    value: '1',
+    texture: '福州大学',
+    isDefault: 'false'
+}, {
+    id: 3,
+    value: '2',
+    texture: '福建师范大学',
+    isDefault: 'false'
 
-function LessonList(props) {
+},
+];
+function college_List(props) {
     const columns = [{
         title: '序号',
         key: 'id',
@@ -17,14 +27,14 @@ function LessonList(props) {
         align: 'center',
         render: (txt, record, index) => index + 1
     }, {
-        title: '课程号',
-        dataIndex: 'lesson'
+        title: '值',
+        dataIndex: 'value'
     }, {
-        title: '课程名',
-        dataIndex: 'name'
+        title: '文本',
+        dataIndex: 'texture'
     }, {
-        title: '学校/学院',
-        dataIndex: 'college'
+        title: '默认值',
+        dataIndex: 'isDefault'
     }, {
         title: '操作',
         render: (txt, record, index) => {
@@ -47,12 +57,12 @@ function LessonList(props) {
     ];
     return (
         <Card
-            title="课程列表"
+            title="学校"
             extra={
                 <Button
                     type="primary"
                     size="small"
-                    onClick={() => props.history.push("/admin/lesson/edit")}
+                    onClick={() => props.history.push("/admin/dic/college/edit")}
                 >
                     新增
                 </Button>
@@ -63,4 +73,4 @@ function LessonList(props) {
     )
 }
 
-export default LessonList
+export default college_List

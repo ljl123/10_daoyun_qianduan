@@ -1,4 +1,4 @@
-import axios from axios
+import axios from 'axios';
 import { getToken } from "./auth";
 
 const instance = axios.create({

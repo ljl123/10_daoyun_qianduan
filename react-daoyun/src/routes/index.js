@@ -6,6 +6,10 @@ import PageNotFound from "../pages/PageNotFound";
 import LessonList from "../pages/admin/lesson/LessonList";
 import LessonEdit from "../pages/admin/lesson/Edit";
 import ForgotPwd from "../pages/ForgotPwd";
+import genderDicList from "../pages/admin/dic/gender/gender_List";
+import genderDicEdit from "../pages/admin/dic/gender/gender_Edit";
+import collegeDicList from "../pages/admin/dic/college/college_List";
+import collegeDicEdit from "../pages/admin/dic/college/college_Edit";
 
 export const mainRoutes = [
     {
@@ -51,6 +55,44 @@ export const adminRoutes = [
     {
         path: "/admin/lesson/edit/:id?",
         component: LessonEdit,
+        isShow: false,
+    },
+    // {
+    //     path: "/admin/dic",
+    //     component: DicList,
+    //     exact: true,
+    //     isShow: true,
+    //     title: "字典管理"
+    // },
+    // {
+    //     path: "/admin/dic/edit/:id?",
+    //     component: DicEdit,
+    //     isShow: false,
+    // }
+];
+export const dicRoutes = [
+    {
+        path: "/admin/dic/gender",
+        component: genderDicList,
+        exact: true,
+        isShow: true,
+        title: "性别管理"
+    },
+    {
+        path: "/admin/dic/gender/edit/:id?",
+        component: genderDicEdit,
+        isShow: false,
+    },
+    {
+        path: "/admin/dic/college",
+        component: collegeDicList,
+        exact: true,
+        isShow: true,
+        title: "学校管理"
+    },
+    {
+        path: "/admin/dic/college/edit/:id?",
+        component: collegeDicEdit,
         isShow: false,
     }
 ]
