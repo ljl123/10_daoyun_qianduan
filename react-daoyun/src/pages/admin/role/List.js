@@ -1,32 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Card, Table, Button, Popconfirm, message } from 'antd';
-import { initUsers, delUserById } from '../../../utils/data';
+import { initRole, delRoleById } from '../../../utils/data';
 
-// const dataSource = [{
-//     id: 1,
-//     phone: '18000000000',
-//     email: '123@123.com',
-//     name: 'zxc'
-// }, {
-//     id: 2,
-//     phone: '13800000000',
-//     email: '',
-//     name: 'aaa'
-// }, {
-//     id: 3,
-//     phone: '18900000000',
-//     email: '',
-//     name: 'zzz',
-
-// },
-// ];
-//const dataSource = [];//initUsers();
-// console.log(dataSource);
 function List(props) {
     const [dataSource, setDataSource] = useState([]);
     useEffect(() => {
-        var data = initUsers();
-        console.log(data);
+        var data = initRole();
+        //console.log('data', data);
         setDataSource(data);
     }, []);
     const columns = [{
@@ -36,23 +16,11 @@ function List(props) {
         align: 'center',
         render: (txt, record, index) => index + 1
     }, {
-        title: '手机号',
-        dataIndex: 'phone'
-    }, {
-        title: '邮箱',
-        dataIndex: 'email'
-    }, {
-        title: '姓名',
-        dataIndex: 'name'
-    }, {
-        title: '性别',
-        dataIndex: 'gender'
-    }, {
-        title: '学号/工号',
-        dataIndex: 'idNumber'
-    }, {
         title: '角色',
         dataIndex: 'role'
+    }, {
+        title: '权限',
+        dataIndex: 'authority'
     }, {
         title: '操作',
         render: (txt, record, index) => {
@@ -60,15 +28,15 @@ function List(props) {
                 <div>
                     <Button type="primary" size="small"
                         onClick={() => {
-                            var path = "/admin/users/edit/" + record.id;
+                            var path = "/admin/role/edit/" + record.id;
                             props.history.push(path);
-                            //console.log(record.id);
+
                         }}>修改</Button>
                     <Popconfirm
                         title="确定删除此项？"
                         onCancel={() => console.log("用户取消删除")}
                         onConfirm={() => {
-                            if (delUserById(record.id)) {
+                            if (delRoleById(record.id)) {
                                 message.success('删除成功！');
                                 window.location.reload(true);
                             } else {
@@ -85,12 +53,12 @@ function List(props) {
     ];
     return (
         <Card
-            title="用户列表"
+            title="角色权限"
             extra={
                 <Button
                     type="primary"
                     size="small"
-                    onClick={() => props.history.push("/admin/users/edit")}
+                    onClick={() => props.history.push("/admin/role/edit")}
                 >
                     新增
                 </Button>

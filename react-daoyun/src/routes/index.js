@@ -10,6 +10,15 @@ import genderDicList from "../pages/admin/dic/gender/gender_List";
 import genderDicEdit from "../pages/admin/dic/gender/gender_Edit";
 import collegeDicList from "../pages/admin/dic/college/college_List";
 import collegeDicEdit from "../pages/admin/dic/college/college_Edit";
+import ParamsList from "../pages/admin/params/List";
+import ParamsEdit from "../pages/admin/params/Edit";
+import StructureList from "../pages/admin/structure/List";
+import StructureNew from "../pages/admin/structure/New";
+import StructureEdit from "../pages/admin/structure/Edit";
+import MenuList from "../pages/admin/menu/List";
+import MenuEdit from "../pages/admin/menu/Edit";
+import RoleList from "../pages/admin/role/List";
+import RoleEdit from "../pages/admin/role/Edit";
 
 export const mainRoutes = [
     {
@@ -57,18 +66,59 @@ export const adminRoutes = [
         component: LessonEdit,
         isShow: false,
     },
-    // {
-    //     path: "/admin/dic",
-    //     component: DicList,
-    //     exact: true,
-    //     isShow: true,
-    //     title: "字典管理"
-    // },
-    // {
-    //     path: "/admin/dic/edit/:id?",
-    //     component: DicEdit,
-    //     isShow: false,
-    // }
+    {
+        path: "/admin/params",
+        component: ParamsList,
+        exact: true,
+        isShow: true,
+        title: "系统参数"
+    },
+    {
+        path: "/admin/params/edit/:id?",
+        component: ParamsEdit,
+        isShow: false,
+    },
+    {
+        path: "/admin/structure",
+        component: StructureList,
+        exact: true,
+        isShow: true,
+        title: "组织结构"
+    },
+    {
+        path: "/admin/structure/new/:id?",
+        component: StructureNew,
+        isShow: false,
+    },
+    {
+        path: "/admin/structure/edit/:id?",
+        component: StructureEdit,
+        isShow: false,
+    },
+    {
+        path: "/admin/menu",
+        component: MenuList,
+        exact: true,
+        isShow: true,
+        title: "菜单管理"
+    },
+    {
+        path: "/admin/menu/edit/:id?",
+        component: MenuEdit,
+        isShow: false,
+    },
+    {
+        path: "/admin/role",
+        component: RoleList,
+        exact: true,
+        isShow: true,
+        title: "角色权限"
+    },
+    {
+        path: "/admin/role/edit/:id?",
+        component: RoleEdit,
+        isShow: false,
+    },
 ];
 export const dicRoutes = [
     {
