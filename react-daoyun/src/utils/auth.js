@@ -16,3 +16,10 @@ export function isLogined() {
 export function clearToken() {
     localStorage.removeItem("token");
 }
+
+export function isManager() {
+    if (localStorage.getItem("type") == 1) {
+        return true;
+    }
+    return false;
+}

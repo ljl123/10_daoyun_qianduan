@@ -7,7 +7,7 @@ import { loginApi } from '../services/auth';
 
 function Login(props) {
     const layout = {
-        labelCol: { span: 8 },
+        labelCol: { span: 6 },
         wrapperCol: { span: 16 },
     };
     const tailLayout = {
@@ -41,6 +41,7 @@ function Login(props) {
         console.log('Failed:', errorInfo);
     };
     return (
+
         <Card title="用户登录" className="login-form">
             <Form
                 {...layout}

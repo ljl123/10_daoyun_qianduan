@@ -19,6 +19,8 @@ import MenuList from "../pages/admin/menu/List";
 import MenuEdit from "../pages/admin/menu/Edit";
 import RoleList from "../pages/admin/role/List";
 import RoleEdit from "../pages/admin/role/Edit";
+import ResetPwd from "../pages/admin/ResetPwd";
+import NoAuth from "../pages/NoAuth";
 
 export const mainRoutes = [
     {
@@ -32,6 +34,19 @@ export const mainRoutes = [
     {
         path: "/404",
         component: PageNotFound
+    },
+    {
+        path: "/403",
+        component: NoAuth
+    }
+];
+
+export const personRoutes = [
+    {
+        path: "/admin/resetPwd",
+        component: ResetPwd,
+        title: "修改密码",
+        isShow: true,
     }
 ];
 
@@ -66,30 +81,30 @@ export const adminRoutes = [
         component: LessonEdit,
         isShow: false,
     },
-    {
-        path: "/admin/params",
-        component: ParamsList,
-        exact: true,
-        isShow: true,
-        title: "系统参数"
-    },
-    {
-        path: "/admin/params/edit/:id?",
-        component: ParamsEdit,
-        isShow: false,
-    },
-    {
-        path: "/admin/structure",
-        component: StructureList,
-        exact: true,
-        isShow: true,
-        title: "组织结构"
-    },
-    {
-        path: "/admin/structure/new/:id?",
-        component: StructureNew,
-        isShow: false,
-    },
+    // {
+    //     path: "/admin/params",
+    //     component: ParamsList,
+    //     exact: true,
+    //     isShow: true,
+    //     title: "系统参数"
+    // },
+    // {
+    //     path: "/admin/params/edit/:id?",
+    //     component: ParamsEdit,
+    //     isShow: false,
+    // },
+    // {
+    //     path: "/admin/structure",
+    //     component: StructureList,
+    //     exact: true,
+    //     isShow: true,
+    //     title: "组织结构"
+    // },
+    // {
+    //     path: "/admin/structure/new/:id?",
+    //     component: StructureNew,
+    //     isShow: false,
+    // },
     {
         path: "/admin/structure/edit/:id?",
         component: StructureEdit,
@@ -117,6 +132,32 @@ export const adminRoutes = [
     {
         path: "/admin/role/edit/:id?",
         component: RoleEdit,
+        isShow: false,
+    },
+];
+export const teRoutes = [
+    {
+        path: "/admin/params",
+        component: ParamsList,
+        exact: true,
+        isShow: true,
+        title: "系统参数"
+    },
+    {
+        path: "/admin/params/edit/:id?",
+        component: ParamsEdit,
+        isShow: false,
+    },
+    {
+        path: "/admin/structure",
+        component: StructureList,
+        exact: true,
+        isShow: true,
+        title: "组织结构"
+    },
+    {
+        path: "/admin/structure/new/:id?",
+        component: StructureNew,
         isShow: false,
     },
 ];
