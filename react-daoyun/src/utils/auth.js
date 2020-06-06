@@ -17,6 +17,10 @@ export function clearToken() {
     localStorage.removeItem("token");
 }
 
+export function setType(type) {
+    return localStorage.setItem("type", type);
+}
+
 export function isManager() {
     if (localStorage.getItem("type") == 1) {
         return true;

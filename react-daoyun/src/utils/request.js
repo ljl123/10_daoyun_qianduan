@@ -2,7 +2,7 @@ import axios from 'axios';
 import { getToken } from "./auth";
 
 const instance = axios.create({
-    baseURL: 'http://localhost:3009/',//服务器端接口
+    baseURL: 'http://localhost:16666/',//服务器端接口
     timeout: 5000
 })
 

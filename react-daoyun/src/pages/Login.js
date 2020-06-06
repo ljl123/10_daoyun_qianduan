@@ -1,7 +1,7 @@
 import React from 'react';
 import { Form, Input, Button, Checkbox, Card, message } from 'antd';
 import './Login.css';
-import { setToken } from '../utils/auth';
+import { setToken, setType } from '../utils/auth';
 import { Redirect } from 'react-router-dom';
 import { loginApi } from '../services/auth';
 
@@ -26,6 +26,7 @@ function Login(props) {
         //         if (res.code === "success") {
         //             message.success("登录成功");
         //             setToken(res.token);
+        //             setType(res.type)
         //             props.history.push("/admin");
         //         } else {
         //             message.info(res.message);
@@ -67,10 +68,11 @@ function Login(props) {
                 </Form.Item>
                 <Form.Item {...tailLayout} name="remember" valuePropName="checked" >
                     <Checkbox>记住我</Checkbox>
+                    <a className="login-form-forgot" href="./#/help" style={{ margin: "0 3rem" }}>
+                        帮助
+                    </a>
                 </Form.Item>
-                {/* <a className="login-form-forgot" href="./#/forgotPwd">
-                    Forgot password
-                    </a> */}
+
 
                 <Form.Item {...tailLayout}>
                     <Button type="primary" htmlType="submit">

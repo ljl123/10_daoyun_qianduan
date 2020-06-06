@@ -385,72 +385,156 @@ export function delStructureById(selfKey) {
 //menu
 const menuList = 'menuList';
 
-export function initMenu() {
-    const data = [
-        {
-            title: '后台管理系统菜单',
-            key: '0',
-            children: [
-                {
-                    title: '用户管理',
-                    key: '00',
-                    children: [],
-                },
-                {
-                    title: '课程管理',
-                    key: '01',
-                    children: [],
-                },
-                {
-                    title: '系统参数',
-                    key: '02',
-                    children: []
-                },
-                {
-                    title: '组织结构',
-                    key: '03',
-                    children: []
-                },
-                {
-                    title: '菜单管理',
-                    key: '04',
-                    children: []
-                },
-                {
-                    title: '字典管理',
-                    key: '05',
-                    children: []
-                },
-                {
-                    title: '个人中心',
-                    key: '06',
-                    children: [
-                        {
-                            title: '通知中心',
-                            key: '060',
-                            children: []
-                        },
-                        {
-                            title: '设置',
-                            key: '061',
-                            children: []
-                        },
-                        {
-                            title: '退出',
-                            key: '062',
-                            children: []
-                        },
-                    ]
-                },
+const menuData = [
+    {
+        title: '后台管理系统菜单',
+        key: '0',
+        url: '',
+        children: [
+            {
+                title: '用户管理',
+                key: '00',
+                url: '/admin/users',
+                children: [],
+            },
+            {
+                title: '课程管理',
+                key: '01',
+                url: "/admin/lesson",
+                children: [],
+            },
+            {
+                title: '角色权限',
+                key: '02',
+                url: "/admin/role",
+                children: []
+            },
+            {
+                title: '字典管理',
+                key: '03',
+                url: "/admin/dic",
+                children: []
+            },
+            {
+                title: '菜单管理',
+                key: '04',
+                url: "/admin/menu",
+                children: []
+            },
+            {
+                title: '系统参数',
+                key: '05',
+                url: "/admin/params",
+                children: []
+            },
+            {
+                title: '组织结构',
+                key: '06',
+                url: "/admin/structure",
+                children: []
+            },
+        ],
+    },
+    {
+        title: '个人中心',
+        key: '1',
+        url: "",
+        children: [
+            {
+                title: '修改密码',
+                key: '10',
+                url: "/admin/resetPwd",
+                children: []
+            }
+        ]
+    },
+];
 
-            ],
-        }
-    ];
+export function initMenu() {
+
     if (get(menuList) == null || get(menuList) == '') {
-        set(menuList, data);
+        set(menuList, menuData);
     }
     return get(menuList);
 }
+
+export function getMenu() {
+    if (get(menuList) == null || get(menuList) == '') {
+        return menuData;
+    } else {
+        return get(menuList);
+    }
+}
+
+export function insertMenu(parentKey, data) {
+    var tree = get(menuList);
+    if (parentKey.length == 1) { //0
+        for (var i = 0; i < tree[0].children.length; i++) {
+            if (data.title == tree[0].children[i].title)
+                return false;
+        }
+
+        var p1 = parseInt(tree[0].children[tree[0].children.length - 1].key[1]) + 1;
+
+        let dataInfo = {
+            title: data.title,
+            key: parentKey + p1,
+            url: data.url,
+            children: []
+        }
+
+        tree[0].children.push(dataInfo);
+        set(menuList, tree);
+        return true;
+    }
+
+
+    if (parentKey.length > 1) {
+        return false;
+    }
+
+}
+
+export function modifyMenuById(selfKey, data) {
+    var tree = get(menuList);
+    var flag = false;
+
+    if (selfKey.length == 1) { //0
+        tree[0].title = data.title;
+        tree[0].url = data.url;
+        flag = true;
+    }
+
+    if (selfKey.length == 2) { //00
+        tree[0].children[parseInt(selfKey[1])].title = data.title;
+        tree[0].children[parseInt(selfKey[1])].url = data.url;
+        flag = true;
+    }
+
+
+    set(menuList, tree);
+    return flag;
+}
+
+export function delMenuById(selfKey) {
+    var tree = get(menuList);
+    var flag = false;
+
+    if (selfKey.length == 1) { //0
+        tree.splice(parseInt(selfKey[0]), 1);
+        flag = true;
+    }
+
+    if (selfKey.length == 2) { //00
+        tree[0].children.splice(parseInt(selfKey[1]), 1);
+        flag = true;
+    }
+
+
+    set(menuList, tree);
+    return flag;
+}
+
 
 //role
 const roleList = 'roleList';
@@ -522,4 +606,55 @@ export function modifyRoleById(id, data) {
 
 export function delRoleById(id) {
     return delById(id, roleList);
+}
+
+//dic
+const dicList = 'dicList';
+const dicInfoList = 'dicInfoList';
+
+export function initDic() {
+    const data = [
+        {
+            id: 1,
+            ch: "性别",
+            en: "gender",
+            describe: "用户性别"
+        }
+
+    ];
+
+    const dataInfo = [
+        {
+            id: 1,
+            children: [
+                {
+                    id: 1,
+                    value: '0',
+                    texture: '未知',
+                    isDefault: 'true'
+                }, {
+                    id: 2,
+                    value: '1',
+                    texture: '男',
+                    isDefault: 'false'
+                }, {
+                    id: 3,
+                    value: '2',
+                    texture: '女',
+                    isDefault: 'false'
+
+                }
+            ]
+        }
+    ];
+
+    if (get(dicList) == null || get(dicList) == '') {
+        set(dicList, data);
+        set(dicInfoList, dataInfo)
+    }
+    return get(dicList);
+}
+
+export function getDicInfoById(id) {
+    return getById(id, dicInfoList).children
 }

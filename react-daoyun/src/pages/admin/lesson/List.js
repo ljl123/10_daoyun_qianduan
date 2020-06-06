@@ -1,13 +1,20 @@
 import React, { useEffect, useState } from 'react';
-import { Card, Table, Button, Popconfirm, message } from 'antd';
-import { initUsers, delUserById } from '../../../utils/data';
+import { Card, Table, Button, Popconfirm, message } from 'antd'
+
+// const dataSource = [{
+//     id: 1,
+//     lesson: '123',
+//     name: '工程训练',
+//     college: '福大/计算机'
+// }
+// ];
 
 function List(props) {
     const [dataSource, setDataSource] = useState([]);
     useEffect(() => {
-        var data = initUsers();  //获取用户列表API
-        console.log(data);
-        setDataSource(data);
+        // var data = initUsers();  API
+        // console.log(data);
+        // setDataSource(data);
     }, []);
     const columns = [{
         title: '序号',
@@ -16,23 +23,14 @@ function List(props) {
         align: 'center',
         render: (txt, record, index) => index + 1
     }, {
-        title: '手机号',
-        dataIndex: 'phone'
+        title: '课程号',
+        dataIndex: 'lesson'
     }, {
-        title: '邮箱',
-        dataIndex: 'email'
-    }, {
-        title: '姓名',
+        title: '课程名',
         dataIndex: 'name'
     }, {
-        title: '性别',
-        dataIndex: 'gender'
-    }, {
-        title: '学号/工号',
-        dataIndex: 'idNumber'
-    }, {
-        title: '角色',
-        dataIndex: 'role'
+        title: '任课教师',
+        dataIndex: 'teacher'
     }, {
         title: '操作',
         render: (txt, record, index) => {
@@ -40,7 +38,7 @@ function List(props) {
                 <div>
                     <Button type="primary" size="small"
                         onClick={() => {
-                            var path = "/admin/users/edit/" + record.id;
+                            var path = "/admin/lesson/edit/" + record.id;
                             props.history.push(path);
                             //console.log(record.id);
                         }}>修改</Button>
@@ -48,12 +46,12 @@ function List(props) {
                         title="确定删除此项？"
                         onCancel={() => console.log("用户取消删除")}
                         onConfirm={() => {
-                            if (delUserById(record.id)) {   //删除用户API
-                                message.success('删除成功！');
-                                window.location.reload(true);
-                            } else {
-                                message.error('删除失败！');
-                            }
+                            // if (delUserById(record.id)) {       api 
+                            //     message.success('删除成功！');
+                            //     window.location.reload(true);
+                            // } else {
+                            //     message.error('删除失败！');
+                            // }
                         }}
                     >
                         <Button style={{ margin: "0 1rem" }} type="danger" size="small">删除</Button>
@@ -65,12 +63,12 @@ function List(props) {
     ];
     return (
         <Card
-            title="用户列表"
+            title="课程列表"
             extra={
                 <Button
                     type="primary"
                     size="small"
-                    onClick={() => props.history.push("/admin/users/edit")}
+                    onClick={() => props.history.push("/admin/lesson/edit")}
                 >
                     新增
                 </Button>

@@ -8,7 +8,7 @@ function Edit(props) {
     const [form] = Form.useForm();
     useEffect(() => {
         if (props.match.params.id) {
-            var data = getUserById(props.match.params.id);
+            var data = getUserById(props.match.params.id);   //修改界面，获取该用户信息API
             console.log(data);
             setCurrentData(data);
             form.setFieldsValue({
@@ -22,7 +22,7 @@ function Edit(props) {
         } else {
             form.setFieldsValue({
                 gender: '未知',
-                role: '学生'
+                role: '管理员'
             });
         }
 
@@ -46,14 +46,14 @@ function Edit(props) {
     const onFinish = values => {
 
         if (props.match.params.id) {
-            if (modifyUserById(props.match.params.id, values)) {
+            if (modifyUserById(props.match.params.id, values)) { //修改API
                 message.success('修改成功！');
                 props.history.push('/admin/users');
             } else {
                 message.error('修改失败！');
             }
         } else {
-            if (insertUser(values)) {
+            if (insertUser(values)) {   //新建用户API
                 message.success('添加用户成功！');
                 props.history.push('/admin/users');
             } else {
@@ -95,7 +95,7 @@ function Edit(props) {
                 <Form.Item name="role" label="角色" rules={[{ required: true }]}>
                     <Select
                     >
-                        <Option value="学生">学生</Option>
+                        {/* <Option value="学生">学生</Option> */}
                         <Option value="教师">教师</Option>
                         <Option value="管理员">管理员</Option>
                     </Select>

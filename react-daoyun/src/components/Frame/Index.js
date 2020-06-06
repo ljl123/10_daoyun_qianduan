@@ -1,7 +1,7 @@
 import React from 'react'
 import { Layout, Menu, Breadcrumb, Dropdown, Avatar, message } from 'antd';
 import { UserOutlined, LaptopOutlined, NotificationOutlined } from '@ant-design/icons';
-import { adminRoutes, dicRoutes, personRoutes, teRoutes } from '../../routes';
+import { adminRoutes, personRoutes, teRoutes } from '../../routes';
 import { withRouter } from 'react-router-dom'
 import { clearToken, isManager } from '../../utils/auth';
 import './frame.css';
@@ -10,7 +10,6 @@ const { SubMenu } = Menu;
 const { Header, Content, Sider } = Layout;
 
 const routes = adminRoutes.filter(route => route.isShow)
-const dicroute = dicRoutes.filter(route => route.isShow)
 const personroute = personRoutes.filter(route => route.isShow)
 const teroute = teRoutes.filter(route => route.isShow)
 
@@ -33,8 +32,7 @@ function Index(props) {
                     </Menu.Item>
                 );
             })}
-            <Menu.Item key="noti">通知中心</Menu.Item>
-            <Menu.Item key="setting">设置</Menu.Item>
+            <Menu.Item key="/help" onClick={p => props.history.push(p.key)}>帮助</Menu.Item>
             <Menu.Item key="logout">退出</Menu.Item>
         </Menu>
     );
@@ -47,7 +45,7 @@ function Index(props) {
                 <Dropdown overlay={popMenu}>
                     <div>
                         <Avatar>U</Avatar>
-                        <span style={{ color: "#fff" }}>管理员</span>
+                        <span style={{ color: "#fff", marginLeft: "0.5rem" }}>管理员</span>
 
                     </div>
                 </Dropdown>
@@ -84,7 +82,7 @@ function Index(props) {
                                 </Menu.Item>
                             );
                         })}
-                        <SubMenu
+                        {/* <SubMenu
                             key="sub"
                             title="字典管理"
 
@@ -97,7 +95,7 @@ function Index(props) {
                                     </Menu.Item>
                                 );
                             })}
-                        </SubMenu>
+                        </SubMenu> */}
                     </Menu>
                 </Sider>
                 <Layout style={{ padding: '6px' }}>

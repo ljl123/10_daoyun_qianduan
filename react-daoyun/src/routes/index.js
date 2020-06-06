@@ -3,13 +3,11 @@ import Index from "../pages/admin/dashboard/Index";
 import List from "../pages/admin/users/List";
 import Edit from "../pages/admin/users/Edit";
 import PageNotFound from "../pages/PageNotFound";
-import LessonList from "../pages/admin/lesson/LessonList";
+import LessonList from "../pages/admin/lesson/List";
 import LessonEdit from "../pages/admin/lesson/Edit";
-import ForgotPwd from "../pages/ForgotPwd";
-import genderDicList from "../pages/admin/dic/gender/gender_List";
-import genderDicEdit from "../pages/admin/dic/gender/gender_Edit";
-import collegeDicList from "../pages/admin/dic/college/college_List";
-import collegeDicEdit from "../pages/admin/dic/college/college_Edit";
+import DicList from "../pages/admin/dic/List";
+import DicEdit from "../pages/admin/dic/Edit";
+import DicInfoEdit from "../pages/admin/dic/InfoEdit";
 import ParamsList from "../pages/admin/params/List";
 import ParamsEdit from "../pages/admin/params/Edit";
 import StructureList from "../pages/admin/structure/List";
@@ -21,16 +19,16 @@ import RoleList from "../pages/admin/role/List";
 import RoleEdit from "../pages/admin/role/Edit";
 import ResetPwd from "../pages/admin/ResetPwd";
 import NoAuth from "../pages/NoAuth";
+import { getMenu } from "../utils/data";
+import Help from "../pages/Help";
+
 
 export const mainRoutes = [
     {
         path: "/login",
         component: Login
     },
-    {
-        path: "/forgotPwd",
-        component: ForgotPwd
-    },
+
     {
         path: "/404",
         component: PageNotFound
@@ -38,31 +36,31 @@ export const mainRoutes = [
     {
         path: "/403",
         component: NoAuth
-    }
+    },
+    {
+        path: "/help",
+        component: Help,
+        title: '帮助'
+    },
 ];
 
 export const personRoutes = [
     {
         path: "/admin/resetPwd",
         component: ResetPwd,
-        title: "修改密码",
+        title: getMenu()[1].children[0].title,
         isShow: true,
     }
 ];
 
 export const adminRoutes = [
-    {
-        path: "/admin/dashboard",
-        component: Index,
-        isShow: true,
-        title: "看板"
-    },
+
     {
         path: "/admin/users",
         component: List,
         exact: true,
         isShow: true,
-        title: "用户管理"
+        title: getMenu()[0].children[0].title
     },
     {
         path: "/admin/users/edit/:id?",
@@ -74,7 +72,7 @@ export const adminRoutes = [
         component: LessonList,
         exact: true,
         isShow: true,
-        title: "课程管理"
+        title: getMenu()[0].children[1].title
     },
     {
         path: "/admin/lesson/edit/:id?",
@@ -105,9 +103,40 @@ export const adminRoutes = [
     //     component: StructureNew,
     //     isShow: false,
     // },
+    // {
+    //     path: "/admin/structure/edit/:id?",
+    //     component: StructureEdit,
+    //     isShow: false,
+    // },
+
     {
-        path: "/admin/structure/edit/:id?",
-        component: StructureEdit,
+        path: "/admin/role",
+        component: RoleList,
+        exact: true,
+        isShow: true,
+        title: getMenu()[0].children[2].title
+    },
+    {
+        path: "/admin/role/edit/:id?",
+        component: RoleEdit,
+        isShow: false,
+    },
+    ,
+    {
+        path: "/admin/dic",
+        component: DicList,
+        exact: true,
+        isShow: true,
+        title: getMenu()[0].children[3].title
+    },
+    {
+        path: "/admin/dic/edit/:id?",
+        component: DicEdit,
+        isShow: false,
+    },
+    {
+        path: "/admin/dic/infoedit/:id?",
+        component: DicInfoEdit,
         isShow: false,
     },
     {
@@ -115,23 +144,11 @@ export const adminRoutes = [
         component: MenuList,
         exact: true,
         isShow: true,
-        title: "菜单管理"
+        title: getMenu()[0].children[4].title
     },
     {
         path: "/admin/menu/edit/:id?",
         component: MenuEdit,
-        isShow: false,
-    },
-    {
-        path: "/admin/role",
-        component: RoleList,
-        exact: true,
-        isShow: true,
-        title: "角色权限"
-    },
-    {
-        path: "/admin/role/edit/:id?",
-        component: RoleEdit,
         isShow: false,
     },
 ];
@@ -141,7 +158,7 @@ export const teRoutes = [
         component: ParamsList,
         exact: true,
         isShow: true,
-        title: "系统参数"
+        title: getMenu()[0].children[5].title
     },
     {
         path: "/admin/params/edit/:id?",
@@ -153,37 +170,17 @@ export const teRoutes = [
         component: StructureList,
         exact: true,
         isShow: true,
-        title: "组织结构"
+        title: getMenu()[0].children[6].title
     },
     {
         path: "/admin/structure/new/:id?",
         component: StructureNew,
         isShow: false,
     },
+    {
+        path: "/admin/structure/edit/:id?",
+        component: StructureEdit,
+        isShow: false,
+    },
 ];
-export const dicRoutes = [
-    {
-        path: "/admin/dic/gender",
-        component: genderDicList,
-        exact: true,
-        isShow: true,
-        title: "性别管理"
-    },
-    {
-        path: "/admin/dic/gender/edit/:id?",
-        component: genderDicEdit,
-        isShow: false,
-    },
-    {
-        path: "/admin/dic/college",
-        component: collegeDicList,
-        exact: true,
-        isShow: true,
-        title: "学校管理"
-    },
-    {
-        path: "/admin/dic/college/edit/:id?",
-        component: collegeDicEdit,
-        isShow: false,
-    }
-]
+
