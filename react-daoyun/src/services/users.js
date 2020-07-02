@@ -1,17 +1,17 @@
 import { get, post, del, put } from "../utils/request";
 
-export function listApi(page = 1) {
-    return get("", { page });
+export function UserlistApi(page = 1) { //获取列表
+    return get("api/user/info", { page });
 }
 
-export function createApi(data) {
-    return post("", data);
+export function UserCreateApi(data) { //创建数据
+    return post("api/user/info", data);
 }
 
-export function modifyApi(id, data) {
-    return put("/${id}", data);
+export function UserModifyApi(uid, data) { //新增数据
+    return put("api/user/info/${uid}", data);
 }
 
-export function delApi(id, data) {
-    return del("/${id}");
+export function UserDelApi(uid, data) { //删除数据
+    return del("api/user/info/${uid}");
 }
