@@ -17,25 +17,27 @@ function Login(props) {
         console.log('Success:', values);
         setToken(values.username);
         props.history.push("/admin");
-        // loginApi({
-        //     userName: values.username,
-        //     password: values.password
-        // })
-        //     .then(res => {
-        //         //console.log(res);
-        //         if (res.code === "success") {
-        //             message.success("登录成功");
-        //             setToken(res.token);
-        //             setType(res.type)
-        //             props.history.push("/admin");
-        //         } else {
-        //             message.info(res.message);
-        //         }
-        //     })
-        //     .catch(err => {
-        //         console.log(err);
-        //         message.error("用户不存在");
-        //     });
+
+        //测试接口能否运行
+        loginApi(values.username,
+            values.password)
+             .then(res => {
+                 console.log(res);
+                 /*if (res.code === "success") {
+                     message.success("登录成功");
+                     setToken(res.token);
+                     setType(res.type)
+                     props.history.push("/admin");
+                 } else {
+                     message.info(res.message);
+                 }*/
+             })
+             .catch(err => {
+                 console.log(err);
+                 message.error("用户不存在");
+             });
+
+
     };
 
     const onFinishFailed = errorInfo => {
@@ -53,7 +55,7 @@ function Login(props) {
             >
                 <Form.Item
                     label="用户名"
-                    name="username"
+                    name="username4"
                     rules={[{ required: true, message: '请输入用户名!' }]}
                 >
                     <Input />
