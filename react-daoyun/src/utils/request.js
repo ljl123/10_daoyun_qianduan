@@ -4,7 +4,7 @@ import qs from 'qs';
 
 const instance = axios.create({
     baseURL: 'http://localhost:33333/',//本地服务器端接口—测试用
-    //baseURL: 'http://121.89.192.99:33333', //服务器端部署测试
+    // baseURL: 'http://121.89.192.99:33333', //服务器端部署测试
     timeout: 5000
 })
 

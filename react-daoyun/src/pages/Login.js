@@ -34,7 +34,7 @@ function Login(props) {
              })
              .catch(err => {
                  console.log(err);
-                 message.error("用户不存在");
+                 message.error("登录失败");
              });
 
 
@@ -55,7 +55,7 @@ function Login(props) {
             >
                 <Form.Item
                     label="用户名"
-                    name="username4"
+                    name="username"
                     rules={[{ required: true, message: '请输入用户名!' }]}
                 >
                     <Input />
