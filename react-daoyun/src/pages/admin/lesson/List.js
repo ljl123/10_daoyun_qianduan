@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Card, Table, Button, Popconfirm, message } from 'antd'
+import { CourselistApi } from '../../../services/course';
 
 // const dataSource = [{
 //     id: 1,
@@ -15,6 +16,9 @@ function List(props) {
         // var data = initUsers();  API
         // console.log(data);
         // setDataSource(data);
+        CourselistApi().then(res => {
+            console.log(res);
+        });
     }, []);
     const columns = [{
         title: '序号',
