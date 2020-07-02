@@ -1,17 +1,26 @@
 import React, { useEffect, useState } from 'react';
 import { Card, Table, Button, Popconfirm, message } from 'antd';
 import { initUsers, delUserById } from '../../../utils/data';
+import { UserlistApi } from '../../../services/users';
 
 function List(props) {
-    const [dataSource, setDataSource] = useState([]);
+    /*const [dataSource, setDataSource] = useState([]); //本地测试
     useEffect(() => {
         var data = initUsers();  //获取用户列表API
         console.log(data);
         setDataSource(data);
     }, []);
+    */
+    const [dataSource, setDataSource] = useState([]);
+    useEffect(() => {
+        UserlistApi().then(res => {
+            console.log(res);
+        });
+    }, []);
+
     const columns = [{
         title: '序号',
-        key: 'id',
+        key: 'uid',
         width: 80,
         align: 'center',
         render: (txt, record, index) => index + 1
@@ -23,16 +32,16 @@ function List(props) {
         dataIndex: 'email'
     }, {
         title: '姓名',
-        dataIndex: 'name'
+        dataIndex: 'user'
     }, {
         title: '性别',
         dataIndex: 'gender'
     }, {
-        title: '学号/工号',
-        dataIndex: 'idNumber'
+        title: '学院',
+        dataIndex: 'idepartment'
     }, {
-        title: '角色',
-        dataIndex: 'role'
+        title: '专业',
+        dataIndex: 'profession'
     }, {
         title: '操作',
         render: (txt, record, index) => {
