@@ -1,25 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { Form, Card, Input, Button, InputNumber, Radio, message } from 'antd'
+import { modifyType, createType } from "../../../services/dict";
 
 function Edit(props) {
     const [currentData, setCurrentData] = useState({});
     const [form] = Form.useForm();
+    
     useEffect(() => {
         if (props.match.params.id) {
-            // var data = getUserById(props.match.params.id);   //修改界面，获取该信息API
-            // console.log(data);
-            // setCurrentData(data);
-            // form.setFieldsValue({
-            //     phone: data.phone,
-            //     email: data.email,
-            //     name: data.name,
-            //     gender: data.gender,
-            //     role: data.role,
-            //     idNumber: data.idNumber
-            // });
-        } else {
+            setCurrentData(props.location.query.record);
+            form.setFieldsValue(props.location.query.record);
         }
-
     }, []);
 
     const layout = {
@@ -34,21 +25,38 @@ function Edit(props) {
 
     const onFinish = values => {
 
-        // if (props.match.params.id) {
-        //     if (modifyUserById(props.match.params.id, values)) { //修改API
-        //         message.success('修改成功！');
-        //         props.history.push('/admin/dic');
-        //     } else {
-        //         message.error('修改失败！');
-        //     }
-        // } else {
-        //     if (insertUser(values)) {                       //新建API
-        //         message.success('添加成功！');
-        //         props.history.push('/admin/dic');
-        //     } else {
-        //         message.error('修改失败！');
-        //     }
-        // }
+        if( props.match.params.id ) {
+            let params = {
+                token: window.localStorage.getItem("token"),
+                ...values,
+                typeid: currentData.typeid,
+            }
+            modifyType(params).then((res) => {
+                if (res.result_code == 200) {
+                    message.success('修改成功！');
+                    props.history.push('/admin/dic');
+                } else {
+                    message.error('修改失败！');
+                }
+            }).catch((err) => {
+                console.log(err);
+            })
+        }else{
+            let params = {
+                token: window.localStorage.getItem("token"),
+                ...values,
+            }
+            createType(params).then((res) => {
+                if (res.result_code == 200) {
+                    message.success('添加成功！');
+                    props.history.push('/admin/dic');
+                } else {
+                    message.error('添加失败！');
+                }
+            }).catch((err) => {
+                console.log(err);
+            })
+        }
     };
 
     return (
@@ -63,14 +71,14 @@ function Edit(props) {
         </Button>
             }
         >
-            <Form {...layout} name="DicEdit" onFinish={onFinish} validateMessages={validateMessages}>
-                <Form.Item name="ch" label="中文" rules={[{ required: true }]}>
+            <Form {...layout} form={form} name="DicEdit" onFinish={onFinish} validateMessages={validateMessages}>
+                <Form.Item name="typenameChinese" label="中文" rules={[{ required: true, message: '请输入中文' }]}>
                     <Input />
                 </Form.Item>
-                <Form.Item name="en" label="英文" rules={[{ required: true }]}>
+                <Form.Item name="typenameEnglish" label="英文" rules={[{ required: true, message: '请输入英文' }]}>
                     <Input />
                 </Form.Item>
-                <Form.Item name="describe" label="描述" >
+                <Form.Item name="description" label="描述" >
                     <Input />
                 </Form.Item>
                 <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 5 }}>
