@@ -11,8 +11,8 @@ import Frame from './components/Frame/Index';
 import './App.css'
 import { isLogined, isManager } from './utils/auth';
 
-function App() {
-  if (isLogined() && isManager()) {
+function App() {//isLogined() && isManager()
+  if (true) {
     return (
       <Frame>
         <Switch > {
@@ -48,8 +48,8 @@ function App() {
         </Switch>
       </Frame>
     );
-  }
-  if (isLogined() && !isManager()) {
+  }//isLogined() && !isManager()
+  if (false) {
     return (
       <Frame>
         <Switch >
