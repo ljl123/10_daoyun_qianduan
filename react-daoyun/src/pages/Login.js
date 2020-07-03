@@ -4,6 +4,7 @@ import './Login.css';
 import { setToken, setType } from '../utils/auth';
 import { Redirect } from 'react-router-dom';
 import { loginApi } from '../services/auth';
+import {hex_md5} from '../utils/md5';
 
 function Login(props) {
     const layout = {
@@ -14,30 +15,28 @@ function Login(props) {
         wrapperCol: { offset: 8, span: 16 },
     };
     const onFinish = values => {
-        console.log('Success:', values);
-        setToken(values.username);
-        props.history.push("/admin");
-
-        //测试接口能否运行
-        loginApi(values.username,
-            values.password)
-             .then(res => {
-                 console.log(res);
-                 /*if (res.code === "success") {
-                     message.success("登录成功");
-                     setToken(res.token);
-                     setType(res.type)
-                     props.history.push("/admin");
-                 } else {
-                     message.info(res.message);
-                 }*/
-             })
-             .catch(err => {
-                 console.log(err);
-                 message.error("登录失败");
-             });
-
-
+        loginApi({
+            username: values.username,
+            password: hex_md5(values.password),
+        })
+            .then(res => {
+                if (res.result_code == 200) {
+                    message.success("登录成功");
+                    //setToken(res.data.token);
+                    setType(res.data.type)
+                    window.localStorage.setItem("userInfo", JSON.stringify(res.data));
+                    localStorage.setItem("token", res.data.token);
+                    localStorage.setItem("type", res.data.type);
+                    localStorage.setItem("uid", res.data.uid);
+                    props.history.push("/admin");
+                } else {
+                    message.info(res.message);
+                }
+            })
+            .catch(err => {
+                console.log(err);
+                message.error("用户不存在");
+            });
     };
 
     const onFinishFailed = errorInfo => {
