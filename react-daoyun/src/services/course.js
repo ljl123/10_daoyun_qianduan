@@ -41,10 +41,10 @@ export function CreateCourseApi(token, course_name, place, time, teacher, stu_co
         axios.post(create_course, fd, { headers: { "Content-Type": "multipart/form-data" } }
         ).then((res) => {
             if (res.data.result_code === '200') {
-                message.success("创建成功");
+                //message.success("创建成功");
             } else {
                 console.log(res.data)
-                message.error("创建失败");
+                //message.error("创建失败");
             }
             //console.log(res.data);
             resolve(res)

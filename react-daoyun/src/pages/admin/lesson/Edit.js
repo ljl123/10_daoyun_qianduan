@@ -106,6 +106,7 @@ function Edit(props) {
                 if (res.data.result_code === '200') {
                     console.log("success add!");
                     message.success('Processing complete!')
+                    props.history.push("/admin/lesson")
                 }
                 else {
                     console.log("fail add!");
@@ -126,15 +127,24 @@ function Edit(props) {
                     返回
             </Button>
             }>
-            <Form {...layout} form={form} name="userEdit" onFinish={onFinish}>
-                <Form.Item name="course_id" label="课程号" rules={[{ required: true, message: '请输入课程号' }]}>
+            <Form {...layout} name="userEdit" onFinish={onFinish}>
+                <Form.Item name="course_name" label="课程名称" rules={[{ required: true }]}>
                     <Input />
                 </Form.Item>
-                <Form.Item name="course_name" label="课程名" rules={[{ required: true, message: '请输入课程名' }]}>
-                    <Input value={currentData.course_name} />
+                <Form.Item name="place" label="上课地点" rules={[{ required: true }]}>
+                    <Input />
                 </Form.Item>
-                <Form.Item name="teacher" label="任课教师" rules={[{}]}>
-                    <Input value={currentData.teacher} />
+                <Form.Item name="time" label="时间" rules={[{ required: true }]}>
+                    <Input />
+                </Form.Item>
+                <Form.Item name="teacher" label="任课教师" rules={[{ required: true }]}>
+                    <Input />
+                </Form.Item>
+                <Form.Item name="stu_count" label="学生人数" rules={[{ required: true }]}>
+                    <Input />
+                </Form.Item>
+                <Form.Item name="location" label="坐标" rules={[{ required: true }]}>
+                    <Input />
                 </Form.Item>
                 <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 5 }}>
                     <Button type="primary" htmlType="submit">保存</Button>

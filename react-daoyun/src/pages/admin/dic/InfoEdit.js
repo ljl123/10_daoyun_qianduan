@@ -7,17 +7,6 @@ function InfoEdit(props) {
     const [form] = Form.useForm();
     useEffect(() => {
         if (props.match.params.id) {
-            // var data = getUserById(props.match.params.id);   //修改界面，获取该信息API
-            // console.log(data);
-            // setCurrentData(data);
-            // form.setFieldsValue({
-            //     phone: data.phone,
-            //     email: data.email,
-            //     name: data.name,
-            //     gender: data.gender,
-            //     role: data.role,
-            //     idNumber: data.idNumber
-            // });
             setCurrentData(props.location.query.record);
             form.setFieldsValue(props.location.query.record);
         } else {

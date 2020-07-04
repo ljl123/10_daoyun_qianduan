@@ -77,12 +77,6 @@ function List(props) {
                         onCancel={(e) => e.stopPropagation()}
                         onConfirm={(e) => {
                             e.stopPropagation();
-                            // if (delUserById(record.id)) {       //删除API
-                            //     message.success('删除成功！');
-                            //     window.location.reload(true);
-                            // } else {
-                            //     message.error('删除失败！');
-                            // }
                             let params = {
                                 token: window.localStorage.getItem("token"),
                                 typeid: record.typeid,

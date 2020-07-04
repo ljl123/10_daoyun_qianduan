@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Form, Card, Input, Button, InputNumber, Radio, message } from 'antd'
 import { modifyType, createType } from "../../../services/dict";
-
+//编辑
 function Edit(props) {
     const [currentData, setCurrentData] = useState({});
     const [form] = Form.useForm();
