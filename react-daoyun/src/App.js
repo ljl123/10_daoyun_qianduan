@@ -11,8 +11,8 @@ import Frame from './components/Frame/Index';
 import './App.css'
 import { isLogined, isManager } from './utils/auth';
 
-function App() {//isLogined() && isManager()
-  if (true) {
+function App() {
+  if (isLogined() && isManager()) {
     return (
       <Frame>
         <Switch > {
@@ -48,8 +48,8 @@ function App() {//isLogined() && isManager()
         </Switch>
       </Frame>
     );
-  }//isLogined() && !isManager()
-  if (false) {
+  }
+  if (isLogined() && !isManager()) {
     return (
       <Frame>
         <Switch >
@@ -62,6 +62,16 @@ function App() {//isLogined() && isManager()
                 />
               );
             })}
+          {
+            personRoutes.map(route => {
+              return (
+                <Route key={route.path} path={route.path} exact={route.exact} render={routeProps => {
+                  return <route.component {...routeProps} />;
+                }}
+                />
+              );
+            })}
+          {/* <Redirect to={teRoutes[0].path} from="/admin" /> */}
           < Redirect to="/403" />
         </Switch>
       </Frame>

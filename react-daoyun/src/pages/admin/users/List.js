@@ -18,14 +18,47 @@ function List(props) {
 
     function getUsers() {
         //let token = localStorage.getItem("token");
-        let type_1 = localStorage.getItem("type");
+        //let type_1 = localStorage.getItem("type");
         let params = {
             token: window.localStorage.getItem("token"),
-            inter_type: type_1,
+            inter_type: '1',
         }
         getUserList(params).then((res) => {
             if (res.result_code == 200) {
-                setDataSource(res.data);
+                console.log(res.data);
+                var dataList = res.data;
+                var l = [];
+                for (var i = 0; i < dataList.length; i++) {
+                    if (dataList[i].type == 1) {
+                        let user = {
+                            uid: dataList[i].uid,
+                            name: dataList[i].name,
+                            phone: dataList[i].phone,
+                            email: dataList[i].email,
+                            stu_code: dataList[i].stu_code,
+                            gender: dataList[i].gender,
+                            type: '管理员'
+                        };
+                        l.push(user);
+
+                    }
+                    if (dataList[i].type == 2) {
+                        let user = {
+                            uid: dataList[i].uid,
+                            name: dataList[i].name,
+                            phone: dataList[i].phone,
+                            email: dataList[i].email,
+                            stu_code: dataList[i].stu_code,
+                            gender: dataList[i].gender,
+                            type: '教师'
+                        };
+                        l.push(user);
+
+                    }
+                }
+                console.log(l);
+                setDataSource(l);
+
             } else {
                 message.error(res.result_desc)
             }
@@ -45,31 +78,37 @@ function List(props) {
         title: '姓名',
         dataIndex: 'name'
     }, {
-        title: '学号',
+        title: '手机号',
+        dataIndex: 'phone'
+    }, {
+        title: '邮箱',
+        dataIndex: 'email'
+    }, {
+        title: '学号/工号',
         dataIndex: 'stu_code'
     }, {
         title: '性别',
         dataIndex: 'gender'
     }, {
-        title: '学校',
-        dataIndex: 'school'
-    }, {
-        title: '院系',
-        dataIndex: 'department'
-    }, {
-        title: '专业',
-        dataIndex: 'profession'
+        title: '角色',
+        dataIndex: 'type'
     }, {
         title: '操作',
         render: (txt, record, index) => {
             return (
                 <div>
-                    <Button type="primary" size="small"
+                    <Button
+                        type="primary"
+                        size="small"
                         onClick={() => {
                             var path = "/admin/users/edit/" + record.uid;
-                            props.history.push(path);
-                            //console.log(record.id);
-                        }}>修改</Button>
+                            console.log(record.uid);
+                            props.history.push({ pathname: path, query: { record: record } });
+                        }}
+                    >
+                        修改
+                </Button>
+
                     <Popconfirm
                         title="确定删除此项？"
                         onCancel={() => console.log("用户取消删除")}
@@ -80,17 +119,19 @@ function List(props) {
                             // } else {
                             //     message.error('删除失败！');
                             // }
-                            let type_2 = localStorage.getItem("type");
-                            let uid_1 = localStorage.getItem("uid");
+                            // let type_2 = localStorage.getItem("type");
+                            // let uid_1 = localStorage.getItem("uid");
                             let params = {
                                 token: window.localStorage.getItem("token"),
-                                inter_type: type_2,
-                                uid: uid_1,
+                                inter_type: '3',
+                                uid: record.uid,
                             }
                             delUser(params).then((res) => {
-                                if (res.result_code == 200) {
+                                console.log(res)
+                                if (res.result_code == '200') {
                                     message.success('删除成功！');
-                                    getUsers();
+                                    window.location.reload(true);
+                                    // getUsers();
                                 } else {
                                     message.error(res.result_desc)
                                 }
@@ -114,7 +155,7 @@ function List(props) {
                 <Button
                     type="primary"
                     size="small"
-                    onClick={() => props.history.push("/admin/users/edit")}
+                    onClick={() => props.history.push("/admin/users/new")}
                 >
                     新增
                 </Button>

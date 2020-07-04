@@ -2,6 +2,7 @@ import Login from "../pages/Login";
 import Index from "../pages/admin/dashboard/Index";
 import List from "../pages/admin/users/List";
 import Edit from "../pages/admin/users/Edit";
+import New from "../pages/admin/users/New";
 import PageNotFound from "../pages/PageNotFound";
 import LessonList from "../pages/admin/lesson/List";
 import LessonEdit from "../pages/admin/lesson/Edit";
@@ -65,6 +66,11 @@ export const adminRoutes = [
     {
         path: "/admin/users/edit/:id?",
         component: Edit,
+        isShow: false,
+    },
+    {
+        path: "/admin/users/new/:id?",
+        component: New,
         isShow: false,
     },
     {

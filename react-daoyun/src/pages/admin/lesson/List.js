@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Card, Table, Button, Popconfirm, message } from 'antd'
-import { getCourseList, deleteCourse } from '../../../services/course'
+import { getCourseList, deleteCourse, } from '../../../services/course'
 
 // const dataSource = [{
 //     id: 1,
@@ -28,6 +28,7 @@ function List(props) {
         }
         getCourseList(params).then((res) => {
             if (res.result_code == 200) {
+                console.log(res);
                 setDataSource(res.data);
             } else {
                 message.error(res.result_desc)
@@ -35,6 +36,7 @@ function List(props) {
         }).catch((err) => {
             console.log(err);
         })
+
     }
 
 
@@ -57,6 +59,11 @@ function List(props) {
         dataIndex: 'teacher',
         key: 'teacher'
     }, {
+        title: '时间',
+        dataIndex: 'time',
+        key: 'time'
+    },
+    {
         title: '操作',
         render: (txt, record, index) => {
             return (
@@ -66,6 +73,7 @@ function List(props) {
                             var path = "/admin/lesson/edit/" + record.course_id;
                             props.history.push(path);
                             //console.log(record.id);
+                            //props.history.push({ pathname: path, query: { record: record } });
                         }}>修改</Button>
                     <Popconfirm
                         title="确定删除此项？"

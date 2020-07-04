@@ -69,7 +69,7 @@ function List(props) {
                     <Button type="primary" size="small"
                         onClick={(e) => {
                             var path = "/admin/dic/edit/" + record.typeid;
-                            props.history.push({ pathname: path, query:{record : record } });
+                            props.history.push({ pathname: path, query: { record: record } });
                             e.stopPropagation();
                         }}>修改</Button>
                     <Popconfirm
@@ -110,7 +110,7 @@ function List(props) {
         render: (txt, record, index) => index + 1
     }, {
         title: '值',
-        dataIndex: 'id'
+        dataIndex: 'mvalue'
     }, {
         title: '文本',
         dataIndex: 'info'
@@ -123,10 +123,10 @@ function List(props) {
             return (
                 <div>
 
-                    <Button type="primary" size="small" 
+                    <Button type="primary" size="small"
                         onClick={(e) => {
                             var path = "/admin/dic/infoedit/" + record.id;
-                            props.history.push({ pathname: path, query:{record : record } });
+                            props.history.push({ pathname: path, query: { record: record } });
                             e.stopPropagation();
                         }}> 修改 </Button>
                     <Popconfirm
@@ -187,8 +187,8 @@ function List(props) {
             <Button
                 type="primary"
                 size="small"
-                onClick={() =>{
-                    if ( !typeid ) {
+                onClick={() => {
+                    if (!typeid) {
                         message.error("请选择主字典管理")
                         return;
                     }

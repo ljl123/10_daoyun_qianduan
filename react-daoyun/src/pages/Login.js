@@ -33,7 +33,13 @@ function Login(props) {
                     localStorage.setItem("token", res.data.token);
                     localStorage.setItem("type", res.data.type);
                     localStorage.setItem("uid", res.data.uid);
-                    props.history.push("/admin");
+                    if (res.data.type == 1) {
+                        props.history.push("/admin");
+                    }
+                    if (res.data.type == 2) {
+                        props.history.push("/admin/params");
+                    }
+
                 } else {
                     message.info(res.message);
                 }
@@ -62,7 +68,7 @@ function Login(props) {
                     name="username"
                     rules={[{ required: true, message: '请输入账号!' }]}
                 >
-                    <Input />
+                    <Input placeholder="用户名/邮箱/手机号" />
                 </Form.Item>
 
                 <Form.Item

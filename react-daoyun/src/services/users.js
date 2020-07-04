@@ -2,8 +2,8 @@ import { get, post, del, put } from "../utils/request";
 import { message } from 'antd'
 import axios from 'axios'
 import { hex_md5 } from '../utils/md5';
-//export const baseURL = 'http://localhost:33333';//±¾µØ·þÎñÆ÷¶Ë½Ó¿Ú¡ª²âÊÔÓÃ
-export const baseURL = 'http://121.89.192.99:33333';//·þÎñÆ÷¶Ë²¿Êð²âÊÔ
+//export const baseURL = 'http://localhost:33333';//ï¿½ï¿½ï¿½Ø·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ë½Ó¿Ú¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+export const baseURL = 'http://121.89.192.99:33333';//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ë²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
 
 export function listApi(page = 1) {
@@ -35,14 +35,14 @@ export function delUser(data) {
 }
 
 export function modifyUser(data) {
-    return put("api/user/info", data);
+    return post("api/manage/user", data);
 }
 
-export function AddUserApi(token, inter_type, phone, type, email, name) {
+export function AddUserApi(token, phone, type, email, name) {
     const register = baseURL + '/api/manage/user';
     var fd = new FormData();
     fd.append('token', token);
-    fd.append('inter_type', inter_type);
+    fd.append('inter_type', '4');
     fd.append('phone', phone);
     fd.append('type', type);
     fd.append('email', email);
@@ -50,43 +50,45 @@ export function AddUserApi(token, inter_type, phone, type, email, name) {
     return new Promise((resolve, reject) => {
         axios.post(register, fd, { headers: { "Content-Type": "multipart/form-data" } }
         ).then((res) => {
-            /*
+
             if (res.data.result_code === '200') {
-                message.success("Ìí¼Ó³É¹¦");
+                //message.success("ï¿½ï¿½ï¿½Ó³É¹ï¿½");
             } else {
                 console.log(res.data)
-                message.error("Ìí¼ÓÊ§°Ü");
+                //message.error("ï¿½ï¿½ï¿½ï¿½Ê§ï¿½ï¿½");
             }
-            */
+
             //console.log(res.data);
             resolve(res)
         })
     })
 }
 
-export function AlterUserApi(token,inter_type, uid, phone, name, email, gender, stu_code, school, department, profession) {
+export function AlterUserApi(data) {
     const alter_user_info = baseURL + '/api/manage/user';
     var fd = new FormData();
-    fd.append('token', token);
-    fd.append('inter_type', inter_type);
-    fd.append('uid', uid);
-    fd.append('phone', phone);
-    fd.append('name', name);
-    fd.append('email', email);
-    fd.append('gender', gender);
-    fd.append('stu_code', stu_code);
-    fd.append('school', school);
-    fd.append('department', department);
-    fd.append('profession', profession);
+
+    fd.append('token', data.token);
+    fd.append('inter_type', '2');
+    fd.append('uid', data.uid);
+    fd.append('phone', data.phone);
+    fd.append('name', data.name);
+    fd.append('email', data.email);
+    fd.append('gender', data.gender);
+    fd.append('stu_code', data.stu_code);
+    fd.append('school', '');
+    fd.append('department', '');
+    fd.append('profession', '');
+
     return new Promise((resolve, reject) => {
         axios.post(alter_user_info, fd, { headers: { "Content-Type": "multipart/form-data" } }
         ).then((res) => {
             /*
             if (res.data.result_code === '200') {
-                message.success("ÐÞ¸Ä³É¹¦");
+                message.success("ï¿½Þ¸Ä³É¹ï¿½");
             } else {
                 console.log(res.data)
-                message.error("ÐÞ¸ÄÊ§°Ü");
+                message.error("ï¿½Þ¸ï¿½Ê§ï¿½ï¿½");
             }
             */
             resolve(res)
@@ -104,10 +106,10 @@ export function GetUserInfoApi(token, inter_type) {
         ).then((res) => {
             /*
             if (res.data.result_code === '200') {
-                message.success("Ìí¼Ó³É¹¦");
+                message.success("ï¿½ï¿½ï¿½Ó³É¹ï¿½");
             } else {
                 console.log(res.data)
-                message.error("Ìí¼ÓÊ§°Ü");
+                message.error("ï¿½ï¿½ï¿½ï¿½Ê§ï¿½ï¿½");
             }
             */
             //console.log(res.data);

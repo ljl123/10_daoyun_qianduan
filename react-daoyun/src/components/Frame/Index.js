@@ -45,7 +45,7 @@ function Index(props) {
                 <Dropdown overlay={popMenu}>
                     <div>
                         <Avatar>U</Avatar>
-                        <span style={{ color: "#fff", marginLeft: "0.5rem" }}>管理员</span>
+                        <span style={{ color: "#fff", marginLeft: "0.5rem" }}>个人中心</span>
 
                     </div>
                 </Dropdown>

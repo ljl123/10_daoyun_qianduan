@@ -2,8 +2,8 @@ import { get, post, del, put } from "../utils/request";
 import { message } from 'antd'
 import axios from 'axios'
 import { hex_md5 } from '../utils/md5';
-//export const baseURL = 'http://localhost:33333';//±¾µØ·þÎñÆ÷¶Ë½Ó¿Ú¡ª²âÊÔÓÃ
-export const baseURL = 'http://121.89.192.99:33333';//·þÎñÆ÷¶Ë²¿Êð²âÊÔ
+//export const baseURL = 'http://localhost:33333';//ï¿½ï¿½ï¿½Ø·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ë½Ó¿Ú¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+export const baseURL = 'http://121.89.192.99:33333';//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ë²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 export function getCourseList(data) {
     return get("api/course/course", data);
 }
@@ -24,7 +24,7 @@ export function deleteCourse(data) {
     return post("api/manage/course", data);
 }
 
-export function CreateCourseApi(token, course_name, place, time, teacher, stu_count, uid, location) { //²âÊÔÍ¨¹ý£¬´´½¨¿Î³Ì½Ó¿Ú
+export function CreateCourseApi(token, course_name, place, time, teacher, stu_count, uid) { //ï¿½ï¿½ï¿½ï¿½Í¨ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î³Ì½Ó¿ï¿½
     const create_course = baseURL + '/api/course/create';
     var fd = new FormData();
     fd.append('token', token);
@@ -36,15 +36,15 @@ export function CreateCourseApi(token, course_name, place, time, teacher, stu_co
     //fd.append('course_id', course_id);
     //fd.append('creater_uid', creater_id);
     fd.append('uid', uid);
-    fd.append('location', location);
+    fd.append('location', '');
     return new Promise((resolve, reject) => {
         axios.post(create_course, fd, { headers: { "Content-Type": "multipart/form-data" } }
         ).then((res) => {
             if (res.data.result_code === '200') {
-                //message.success("´´½¨³É¹¦");
+                //message.success("ï¿½ï¿½ï¿½ï¿½ï¿½É¹ï¿½");
             } else {
                 console.log(res.data)
-                //message.error("´´½¨Ê§°Ü");
+                //message.error("ï¿½ï¿½ï¿½ï¿½Ê§ï¿½ï¿½");
             }
             //console.log(res.data);
             resolve(res)

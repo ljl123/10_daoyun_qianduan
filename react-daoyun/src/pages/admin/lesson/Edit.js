@@ -7,35 +7,62 @@ function Edit(props) {
     const [form] = Form.useForm();
     let { match: { params: { id } } } = props;
     useEffect(() => {
-        if (id) {
+        if (props.match.params.id) {
+            console.log(props.match.params.id)
+            // setCurrentData(props.location.query.record);
+            // form.setFieldsValue(props.location.query.record);
             let params = {
-                course_id: id,
-                token: window.localStorage.getItem("token")
+                token: window.localStorage.getItem("token"),
+                course_id: props.match.params.id,
             }
             getCourseInfo(params).then((res) => {
                 if (res.result_code == 200) {
-                    setCurrentData(res.data);
-                    form.setFieldsValue(res.data)
+                    // console.log(res);
+                    // console.log(res.data.course_name);
+                    form.setFieldsValue({
+                        course_name: res.data.course_name,
+                        place: res.data.place,
+                        time: res.data.time,
+                        teacher: res.data.teacher,
+                        stu_count: res.data.stu_count,
+                    });
                 } else {
                     message.error(res.result_desc)
                 }
             }).catch((err) => {
                 console.log(err);
             })
-            //var data = getUserById(props.match.params.id);      //修改功能，获取选中课程信息API
-            // console.log(data);
-            // setCurrentData(data);
-            // form.setFieldsValue({
-            //     lesson: data.lesson,
-            //     name: data.name,
-            //     teacher: data.teacher
-            // });
-        } else {
-            // form.setFieldsValue({
-            //     gender: '未知',
-            //     role: '学生'
-            // });
         }
+
+        // if (id) {
+        //     let params = {
+        //         course_id: id,
+        //         token: window.localStorage.getItem("token")
+        //     }
+        //     getCourseInfo(params).then((res) => {
+        //         if (res.result_code == 200) {
+        //             setCurrentData(res.data);
+        //             form.setFieldsValue(res.data)
+        //         } else {
+        //             message.error(res.result_desc)
+        //         }
+        //     }).catch((err) => {
+        //         console.log(err);
+        //     })
+        //     //var data = getUserById(props.match.params.id);      //修改功能，获取选中课程信息API
+        //     // console.log(data);
+        //     // setCurrentData(data);
+        //     // form.setFieldsValue({
+        //     //     lesson: data.lesson,
+        //     //     name: data.name,
+        //     //     teacher: data.teacher
+        //     // });
+        // } else {
+        //     // form.setFieldsValue({
+        //     //     gender: '未知',
+        //     //     role: '学生'
+        //     // });
+        // }
 
     }, []);
 
@@ -102,14 +129,14 @@ function Edit(props) {
                 })
             }
             */
-            CreateCourseApi(token, values.course_name, values.place, values.time, values.teacher, values.stu_count, uid, values.location).then((res) => {
+            CreateCourseApi(token, values.course_name, values.place, values.time, values.teacher, values.stu_count, uid).then((res) => {
                 if (res.data.result_code === '200') {
                     console.log("success add!");
-                    message.success('Processing complete!')
+                    message.success('添加成功!');
                     props.history.push("/admin/lesson")
                 }
                 else {
-                    console.log("fail add!");
+                    message.success('添加失败!')
                 }
             })
         }
@@ -127,7 +154,7 @@ function Edit(props) {
                     返回
             </Button>
             }>
-            <Form {...layout} name="userEdit" onFinish={onFinish}>
+            <Form {...layout} name="lessonEdit" onFinish={onFinish} form={form}>
                 <Form.Item name="course_name" label="课程名称" rules={[{ required: true }]}>
                     <Input />
                 </Form.Item>
@@ -143,9 +170,9 @@ function Edit(props) {
                 <Form.Item name="stu_count" label="学生人数" rules={[{ required: true }]}>
                     <Input />
                 </Form.Item>
-                <Form.Item name="location" label="坐标" rules={[{ required: true }]}>
+                {/* <Form.Item name="location" label="坐标" rules={[{ required: true }]}>
                     <Input />
-                </Form.Item>
+                </Form.Item> */}
                 <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 5 }}>
                     <Button type="primary" htmlType="submit">保存</Button>
                 </Form.Item>

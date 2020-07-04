@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Form, Card, Input, Button, InputNumber, Radio, message } from 'antd'
-import { modifyDictInfo, createDictInfo } from "../../../services/dict";
+import { modifyDictInfo, createDictInfo, getDictTypes } from "../../../services/dict";
 
 function InfoEdit(props) {
     const [currentData, setCurrentData] = useState({});
@@ -26,12 +26,15 @@ function InfoEdit(props) {
     };
 
     const onFinish = values => {
+
         if (props.match.params.id) {
             let params = {
                 token: window.localStorage.getItem("token"),
                 ...values,
                 typeid: currentData.typeid,
-                infoid: values.id,
+                //typeid: 3,
+                id: props.match.params.id,
+                //mvalue: values.id,
             }
             modifyDictInfo(params).then((res) => {
                 if (res.result_code == 200) {
@@ -60,21 +63,7 @@ function InfoEdit(props) {
                 console.log(err);
             })
         }
-        // if (props.match.params.id) {
-        //     if (modifyUserById(props.match.params.id, values)) { //修改API
-        //         message.success('修改成功！');
-        //         props.history.push('/admin/dic');
-        //     } else {
-        //         message.error('修改失败！');
-        //     }
-        // } else {
-        //     if (insertUser(values)) {                       //新建API
-        //         message.success('添加成功！');
-        //         props.history.push('/admin/dic');
-        //     } else {
-        //         message.error('修改失败！');
-        //     }
-        // }
+
     };
 
     return (
@@ -89,7 +78,7 @@ function InfoEdit(props) {
         </Button>
             }>
             <Form {...layout} form={form} name="DicInfoEdit" onFinish={onFinish} validateMessages={validateMessages}>
-                <Form.Item name="id" label="值" rules={[{ required: true }]}>
+                <Form.Item name="mvalue" label="值" rules={[{ required: true }]}>
                     <Input />
                 </Form.Item>
                 <Form.Item name="info" label="文本" rules={[{ required: true }]}>
