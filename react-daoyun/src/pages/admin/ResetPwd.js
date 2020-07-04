@@ -1,4 +1,6 @@
 import React from 'react'
+import { getToken, getEmail,getPwd } from '../../utils/auth';
+import { modifyPwdApi } from '../../services/password';
 import {
     Form,
     Input,
@@ -40,7 +42,17 @@ function ResetPwd() {
     const [form] = Form.useForm();
 
     const onFinish = values => {
-        console.log('Received values of form: ', values);
+        let token= getToken("token");
+        let email= getEmail("email");
+        let old_pwd= getPwd("pwd");
+        console.log("email"+email);
+        console.log("old_pwd"+old_pwd);
+        let new_pwd=values.password;
+        modifyPwdApi(token, email,old_pwd,new_pwd).then((res)=>{
+            if(res.data.result_code === '200'){
+                                
+            }
+        })
     };
 
     return (
