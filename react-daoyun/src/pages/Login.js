@@ -58,9 +58,9 @@ function Login(props) {
                 onFinishFailed={onFinishFailed}
             >
                 <Form.Item
-                    label="用户名"
+                    label="账号"
                     name="username"
-                    rules={[{ required: true, message: '请输入用户名!' }]}
+                    rules={[{ required: true, message: '请输入账号!' }]}
                 >
                     <Input />
                 </Form.Item>
