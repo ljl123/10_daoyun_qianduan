@@ -1,6 +1,8 @@
 import React from 'react'
 import { getToken, getEmail,getPwd } from '../../utils/auth';
 import { modifyPwdApi } from '../../services/password';
+import { hex_md5 } from '../../utils/md5';
+import { setEmail, setPwd } from '../../utils/auth';
 import {
     Form,
     Input,
@@ -50,7 +52,7 @@ function ResetPwd() {
         let new_pwd=values.password;
         modifyPwdApi(token, email,old_pwd,new_pwd).then((res)=>{
             if(res.data.result_code === '200'){
-                                
+                setPwd(hex_md5(new_pwd));          
             }
         })
     };
