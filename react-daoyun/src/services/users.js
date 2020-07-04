@@ -39,7 +39,7 @@ export function modifyUser(data) {
 }
 
 export function AddUserApi(token, inter_type, phone, type, email, name) {
-    const register = baseURL + '/api/user/register';
+    const register = baseURL + '/api/manage/user';
     var fd = new FormData();
     fd.append('token', token);
     fd.append('inter_type', inter_type);
@@ -50,12 +50,66 @@ export function AddUserApi(token, inter_type, phone, type, email, name) {
     return new Promise((resolve, reject) => {
         axios.post(register, fd, { headers: { "Content-Type": "multipart/form-data" } }
         ).then((res) => {
+            /*
             if (res.data.result_code === '200') {
                 message.success("添加成功");
             } else {
                 console.log(res.data)
                 message.error("添加失败");
             }
+            */
+            //console.log(res.data);
+            resolve(res)
+        })
+    })
+}
+
+export function AlterUserApi(token,inter_type, uid, phone, name, email, gender, stu_code, school, department, profession) {
+    const alter_user_info = baseURL + '/api/manage/user';
+    var fd = new FormData();
+    fd.append('token', token);
+    fd.append('inter_type', inter_type);
+    fd.append('uid', uid);
+    fd.append('phone', phone);
+    fd.append('name', name);
+    fd.append('email', email);
+    fd.append('gender', gender);
+    fd.append('stu_code', stu_code);
+    fd.append('school', school);
+    fd.append('department', department);
+    fd.append('profession', profession);
+    return new Promise((resolve, reject) => {
+        axios.post(alter_user_info, fd, { headers: { "Content-Type": "multipart/form-data" } }
+        ).then((res) => {
+            /*
+            if (res.data.result_code === '200') {
+                message.success("修改成功");
+            } else {
+                console.log(res.data)
+                message.error("修改失败");
+            }
+            */
+            resolve(res)
+        })
+    })
+}
+
+export function GetUserInfoApi(token, inter_type) {
+    const register = baseURL + '/api/manage/user';
+    var fd = new FormData();
+    fd.append('token', token);
+    fd.append('inter_type', inter_type);
+    return new Promise((resolve, reject) => {
+        axios.post(register, fd, { headers: { "Content-Type": "multipart/form-data" } }
+        ).then((res) => {
+            /*
+            if (res.data.result_code === '200') {
+                message.success("添加成功");
+            } else {
+                console.log(res.data)
+                message.error("添加失败");
+            }
+            */
             //console.log(res.data);
             resolve(res)
         })
