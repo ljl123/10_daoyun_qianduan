@@ -44,7 +44,6 @@ function List(props) {
     useEffect(() => {
         getParams();
         var data = initParams();
-        console.log("params"+data[0].value);
         setDataSource(data);
     }, []);
     
