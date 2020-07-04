@@ -27,3 +27,18 @@ export function isManager() {
     }
     return false;
 }
+
+export function getEmail() {
+    return localStorage.getItem("email");
+}
+
+export function setEmail(email) {
+    return localStorage.setItem("email", email);
+}
+export function getPwd() {
+    return localStorage.getItem("pwd");
+}
+
+export function setPwd(pwd) {
+    return localStorage.setItem("pwd", pwd);
+}
