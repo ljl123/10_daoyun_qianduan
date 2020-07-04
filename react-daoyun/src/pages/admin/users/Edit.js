@@ -1,29 +1,53 @@
 import React, { useEffect, useState } from 'react';
 import { Form, Card, Input, Button, Select, message } from 'antd';
 import { insertUser, getUserById, modifyUserById } from '../../../utils/data';
-import { AddUserApi, getUserInfo, modifyUser } from "../../../services/users";
+import { GetUserInfoApi, AddUserApi, AlterUserApi, getUserInfo, modifyUser } from "../../../services/users";
+import { setToken, getToken } from '../../../utils/auth';
+import { set, initUsers,  getParamById, modifyParamById } from '../../../utils/data';
 
+const userList = 'userList';
 function Edit(props) {
     console.log(props);
     const [currentData, setCurrentData] = useState({});
     const [form] = Form.useForm();
     useEffect(() => {
         let id = props.match.params.id
-        let name_1 = props.match.params.name
+        //let name_1 = props.match.params.name
+        //let token = localStorage.getItem("token");
         if (id) {
-            // var data = getUserById(props.match.params.id);   //修改界面，获取该用户信息API
-            // console.log(data);
-            // setCurrentData(data);
-            // form.setFieldsValue({
-            //     phone: data.phone,
-            //     email: data.email,
-            //     name: data.name,
-            //     gender: data.gender,
-            //     role: data.role,
-            //     idNumber: data.idNumber
-            // });
+            var data = getUserById(props.match.params.id);   //修改界面，获取该用户信息API
+             console.log(data);
+             setCurrentData(data);
+             form.setFieldsValue({
+                 uid: data.uid,
+                 email: data.email,
+                 password: data.password,
+                 type: data.type,
+                 name: data.name,
+                 nick_name: data.nick_name,
+                 gender: data.gender,
+                 phone: data.phone,
+                 stu_code: data.stu_code,
+                 school: data.school,
+                 department: data.department,
+                 profession: data.profession,
+                 last_login_time: data.last_login_time,
+                 reg_time: data.reg_time
+             });
+            /*
             let type_1 = localStorage.getItem("type");
             let uid_1 = localStorage.getItem("uid");
+            GetUserInfoApi(token, type_1).then((res) => {
+                    if (res.data.result_code === '200') {
+                        console.log("成功添加");
+                        message.success('修改成功')
+                    }
+                    else {
+                        console.log("fail add!");
+                    }
+            })
+            */
+            /*
             let params = {
                 token: window.localStorage.getItem("token"),
                 uid: uid_1,
@@ -40,7 +64,7 @@ function Edit(props) {
             }).catch((err) => {
                 console.log(err);
             })
-
+            */
 
         } else {
             form.setFieldsValue({
@@ -70,6 +94,7 @@ function Edit(props) {
         let token = localStorage.getItem("token");
         let uid = localStorage.getItem("uid");
         let type_1 = localStorage.getItem("type");
+        let id = props.match.params.id
         if (props.match.params.id) {
             // if (modifyUserById(props.match.params.id, values)) { //修改API
             //     message.success('修改成功！');
@@ -77,7 +102,47 @@ function Edit(props) {
             // } else {
             //     message.error('修改失败！');
             // }
+            AlterUserApi(token, type_1, uid, values.phone, values.name, values.email, values.gender, values.stu_code,
+                values.school, values.department, values.profession).then((res) => {
+                if (res.data.result_code === '200') {
+                    //console.log("成功添加");
+                    //message.success('修改成功')
+                    //props.history.push('/admin/users');
+                    let token = getToken("token");
+                    let user_list = [];
+                    GetUserInfoApi(token).then((res) => {
+                        if (res.data.result_code === '200') {
+                            console.log("success get params list!");
+                            for (let i = 0; i < res.data.length; i++) {
+                                let dataInfo = {
+                                    id: id,
+                                    name: res.data[i].name,
+                                    stu_code: res.data[i].stu_code,
+                                    gender: res.data[i].gender,
+                                    school: res.data[i].school,
+                                    department: res.data[i].department,
+                                    profession: res.data[i].profession
+                                };
+                                user_list.push(dataInfo);
+                                set(userList, user_list);
+                                props.history.push('/admin/users');
+                            }
+                        }
+                        else if (res.data.result_code === '206') {
+                            console.log("token time out!");
+                            message.error("token time out!");
+                        } else {
+                            console.log(res.data);
+                        }
+                    }) 
+                }
+                else {
+                    console.log("fail add!");
+                }
+            })
 
+
+            /*
             let params = {
                 uid: props.match.params.id,
                 ...values,
@@ -93,7 +158,7 @@ function Edit(props) {
             }).catch((err) => {
                 console.log(err);
             })
-
+            */
 
         } else {
             /*
@@ -106,8 +171,9 @@ function Edit(props) {
             */
             AddUserApi(token, type_1, values.phone, values.type, values.email, values.name).then((res) => {
                 if (res.data.result_code === '200') {
-                    console.log("success add!");
-                    message.success('Processing complete!')
+                    console.log("成功添加");
+                    message.success('添加完成')
+                    props.history.push('/admin/users');
                 }
                 else {
                     console.log("fail add!");
@@ -132,13 +198,13 @@ function Edit(props) {
                 <Form.Item name="phone" label="手机号" rules={[{ required: true, message: "请输入手机号" }]}>
                     <Input />
                 </Form.Item>
-                <Form.Item name="email" label="邮箱" rules={[{ type: 'email' }]}>
+                <Form.Item name="email" label="邮箱" rules={[{ required: true, type: 'email' }]}>
                     <Input />
                 </Form.Item>
                 <Form.Item name="name" label="姓名" rules={[{ required: true, message: "姓名" }]}>
                     <Input />
                 </Form.Item>
-                <Form.Item name="gender" label="性别" rules={[{ required: true, message: "请选择性别" }]}>
+                <Form.Item name="gender" label="性别" rules={[{  message: "请选择性别" }]}>
                     <Select
                     >
                         <Option value="男">男</Option>
@@ -154,7 +220,16 @@ function Edit(props) {
                         <Option value="1">管理员</Option>
                     </Select>
                 </Form.Item>
-                <Form.Item name="stu_code" label="学号/工号" rules={[{}]}>
+                <Form.Item name="stu_code" label="学号" rules={[{}]}>
+                    <Input />
+                </Form.Item>
+                <Form.Item name="school" label="学校" rules={[{}]}>
+                    <Input />
+                </Form.Item>
+                <Form.Item name="department" label="院系" rules={[{}]}>
+                    <Input />
+                </Form.Item>
+                <Form.Item name="profession" label="专业" rules={[{}]}>
                     <Input />
                 </Form.Item>
                 <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 5 }}>
