@@ -4,7 +4,8 @@ import './Login.css';
 import { setToken, setType } from '../utils/auth';
 import { Redirect } from 'react-router-dom';
 import { loginApi } from '../services/auth';
-import {hex_md5} from '../utils/md5';
+import { hex_md5 } from '../utils/md5';
+import { setEmail, setPwd } from '../utils/auth';
 
 function Login(props) {
     const layout = {
@@ -23,8 +24,12 @@ function Login(props) {
                 if (res.result_code == 200) {
                     message.success("登录成功");
                     //setToken(res.data.token);
+                    setEmail(res.data.email);
+                    setPwd(hex_md5(values.password));
                     setType(res.data.type)
                     window.localStorage.setItem("userInfo", JSON.stringify(res.data));
+                    //localStorage.setItem("email", res.data.email);
+                    //localStorage.setItem("email_pwd", values.password);
                     localStorage.setItem("token", res.data.token);
                     localStorage.setItem("type", res.data.type);
                     localStorage.setItem("uid", res.data.uid);

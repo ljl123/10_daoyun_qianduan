@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Form, Card, Input, Button, message } from 'antd';
-import { getCourseInfo, modifyCourse, createCourse } from '../../../services/course'
+import { CreateCourseApi, getCourseInfo, modifyCourse, createCourse } from '../../../services/course'
 
 function Edit(props) {
     const [currentData, setCurrentData] = useState({});
@@ -50,7 +50,8 @@ function Edit(props) {
 
 
     const onFinish = values => {
-
+        let token = localStorage.getItem("token");
+        let uid = localStorage.getItem("uid");
         if (props.match.params.id) {
             // if (modifyUserById(props.match.params.id, values)) { //修改课程API
             //     message.success('修改成功！');
@@ -80,6 +81,7 @@ function Edit(props) {
             // } else {
             //     message.error('添加课程失败！');
             // }
+            /*
             let userInfo = window.localStorage.getItem("userInfo");
             if ( userInfo ) {
                 userInfo = JSON.parse(userInfo);
@@ -99,6 +101,16 @@ function Edit(props) {
                     console.log(err);
                 })
             }
+            */
+            CreateCourseApi(token, values.course_name, values.place, values.time, values.teacher, values.stu_count, uid, values.location).then((res) => {
+                if (res.data.result_code === '200') {
+                    console.log("success add!");
+                    message.success('Processing complete!')
+                }
+                else {
+                    console.log("fail add!");
+                }
+            })
         }
 
     };
