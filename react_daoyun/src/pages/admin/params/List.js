@@ -39,7 +39,7 @@ export function getParams(){
     })
 }
 
-function List(props) { 
+function List(props) {
     const [dataSource, setDataSource] = useState([]);
     useEffect(() => {
         getParams();

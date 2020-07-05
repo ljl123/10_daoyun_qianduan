@@ -1,5 +1,5 @@
 import Login from "../pages/Login";
-import Index from "../pages/admin/dashboard/Index";
+
 import List from "../pages/admin/users/List";
 import Edit from "../pages/admin/users/Edit";
 import New from "../pages/admin/users/New";

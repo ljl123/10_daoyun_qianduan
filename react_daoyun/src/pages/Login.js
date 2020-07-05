@@ -1,13 +1,29 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Form, Input, Button, Checkbox, Card, message } from 'antd';
 import './Login.css';
 import { setToken, setType } from '../utils/auth';
 import { Redirect } from 'react-router-dom';
 import { loginApi } from '../services/auth';
 import { hex_md5 } from '../utils/md5';
-import { setEmail, setPwd } from '../utils/auth';
+import { setEmail, setPwd, getPwd, getUser, setUser } from '../utils/auth';
 
 function Login(props) {
+    //const [dataSource, setDataSource] = useState([]);
+    const [form] = Form.useForm();
+    useEffect(() => {
+        var username = getUser();
+        var pwd = getPwd();
+        // console.log(username);
+        // console.log(pwd);
+        if (username && pwd) {
+            form.setFieldsValue({
+                username: username,
+                password: pwd
+            });
+        }
+
+    }, []);
+
     const layout = {
         labelCol: { span: 6 },
         wrapperCol: { span: 16 },
@@ -22,10 +38,20 @@ function Login(props) {
         })
             .then(res => {
                 if (res.result_code == 200) {
-                    message.success("登录成功");
+                    if (res.data.type == 3) {
+                        message.error("无权限登录！");
+                    } else {
+                        message.success("登录成功");
+                    }
+                    console.log(values)
+                    if (values.remember == true) {
+                        //console.log('1');
+                        setUser(values.username);
+                        setPwd(values.password);
+                    }
                     //setToken(res.data.token);
                     setEmail(res.data.email);
-                    setPwd(hex_md5(values.password));
+                    // setPwd(hex_md5(values.password));
                     setType(res.data.type)
                     window.localStorage.setItem("userInfo", JSON.stringify(res.data));
                     //localStorage.setItem("email", res.data.email);
@@ -41,7 +67,7 @@ function Login(props) {
                     }
 
                 } else {
-                    message.info(res.message);
+                    message.info('请确认用户名/密码正确！');
                 }
             })
             .catch(err => {
@@ -59,9 +85,10 @@ function Login(props) {
             <Form
                 {...layout}
                 name="basic"
-                initialValues={{ remember: true }}
                 onFinish={onFinish}
                 onFinishFailed={onFinishFailed}
+                initialValues={{ remember: true }}
+                form={form}
             >
                 <Form.Item
                     label="账号"
@@ -78,14 +105,16 @@ function Login(props) {
                 >
                     <Input.Password />
                 </Form.Item>
-                <Form.Item {...tailLayout} name="remember" valuePropName="checked" >
-                    <Checkbox>记住我</Checkbox>
+
+                <Form.Item {...tailLayout}>
+                    <Form.Item {...tailLayout} name="remember" valuePropName="checked" noStyle>
+                        <Checkbox >记住我</Checkbox>
+                    </Form.Item>
+
                     <a className="login-form-forgot" href="./#/help" style={{ margin: "0 3rem" }}>
                         帮助
                     </a>
                 </Form.Item>
-
-
                 <Form.Item {...tailLayout}>
                     <Button type="primary" htmlType="submit">
                         登录

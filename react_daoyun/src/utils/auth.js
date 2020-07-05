@@ -42,3 +42,11 @@ export function getPwd() {
 export function setPwd(pwd) {
     return localStorage.setItem("pwd", pwd);
 }
+
+export function getUser() {
+    return localStorage.getItem("username");
+}
+
+export function setUser(username) {
+    return localStorage.setItem("username", username);
+}

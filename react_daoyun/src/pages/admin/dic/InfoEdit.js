@@ -1,12 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { Form, Card, Input, Button, InputNumber, Radio, message } from 'antd'
-import { modifyDictInfo, createDictInfo, getDictTypes } from "../../../services/dict";
+import { modifyDictInfo, createDictInfo, getDictInfos } from "../../../services/dict";
 
 function InfoEdit(props) {
     const [currentData, setCurrentData] = useState({});
+    const [dataInfoSource, setDataInfoSource] = useState([]);
     const [form] = Form.useForm();
     useEffect(() => {
-        if (props.match.params.id) {
+        //console.log(props.location.query.typeid)
+        if (props.location.query)
+            getTypeInfo(props.location.query.typeid);
+
+        if (props.match.params.id && props.location.query) {
+            //console.log(props.location.query.record.typeid)
             setCurrentData(props.location.query.record);
             form.setFieldsValue(props.location.query.record);
         } else {
@@ -24,45 +30,81 @@ function InfoEdit(props) {
 
 
     };
-
-    const onFinish = values => {
-
-        if (props.match.params.id) {
-            let params = {
-                token: window.localStorage.getItem("token"),
-                ...values,
-                typeid: currentData.typeid,
-                //typeid: 3,
-                id: props.match.params.id,
-                //mvalue: values.id,
-            }
-            modifyDictInfo(params).then((res) => {
-                if (res.result_code == 200) {
-                    message.success('修改成功！');
-                    props.history.push('/admin/dic');
-                } else {
-                    message.error('修改失败！');
-                }
-            }).catch((err) => {
-                console.log(err);
-            })
-        } else {
-            let params = {
-                token: window.localStorage.getItem("token"),
-                ...values,
-                typeid: props.location.query.typeid,
-            }
-            createDictInfo(params).then((res) => {
-                if (res.result_code == 200) {
-                    message.success('添加成功！');
-                    props.history.push('/admin/dic');
-                } else {
-                    message.error('添加失败！');
-                }
-            }).catch((err) => {
-                console.log(err);
-            })
+    function getTypeInfo(typeid) {
+        let params = {
+            token: window.localStorage.getItem("token"),
+            typeid,
         }
+        getDictInfos(params).then((res) => {
+            if (res.result_code == 200) {
+                setDataInfoSource(res.data);
+                //console.log(res.data)
+
+            } else {
+                message.error(res.result_desc)
+            }
+        }).catch((err) => {
+            console.log(err);
+        })
+    }
+    const onFinish = values => {
+        // for (var i = 0; i < dataInfoSource.length; i++) {
+        //     console.log(dataInfoSource[i])
+        // }
+        var flag = true;
+        if (values.typestate == 1) {
+            for (var i = 0; i < dataInfoSource.length; i++) {
+                if (dataInfoSource[i].typestate == 1) {
+                    flag = false;
+                    //console.log(flag)
+                    break;
+                }
+            }
+        }
+        //console.log(flag)
+        if (flag) {
+            if (props.match.params.id) {
+                let params = {
+                    token: window.localStorage.getItem("token"),
+                    ...values,
+                    typeid: currentData.typeid,
+                    //typeid: 3,
+                    id: props.match.params.id,
+                    //mvalue: values.id,
+                }
+                modifyDictInfo(params).then((res) => {
+                    if (res.result_code == 200) {
+                        message.success('修改成功！');
+                        props.history.push('/admin/dic');
+                    } else {
+                        //console.log(res)
+                        message.error('修改失败！');
+                    }
+                }).catch((err) => {
+                    console.log(err);
+                })
+            } else {
+                let params = {
+                    token: window.localStorage.getItem("token"),
+                    ...values,
+                    typeid: props.location.query.typeid,
+                }
+                createDictInfo(params).then((res) => {
+                    if (res.result_code == 200) {
+                        message.success('添加成功！');
+                        props.history.push('/admin/dic');
+                    } else {
+
+                        message.error('添加失败！');
+                    }
+                }).catch((err) => {
+                    console.log(err);
+                })
+            }
+        } else {
+            message.error('默认值只能唯一！');
+        }
+
 
     };
 

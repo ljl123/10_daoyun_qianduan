@@ -126,7 +126,8 @@ function List(props) {
                     <Button type="primary" size="small"
                         onClick={(e) => {
                             var path = "/admin/dic/infoedit/" + record.id;
-                            props.history.push({ pathname: path, query: { record: record } });
+                            //console.log(typeid)
+                            props.history.push({ pathname: path, query: { record: record, typeid } });
                             e.stopPropagation();
                         }}> 修改 </Button>
                     <Popconfirm
@@ -181,6 +182,7 @@ function List(props) {
                         onClick: event => {
                             getTypeInfo(record.typeid);
                             setTypeid(record.typeid);
+
                         }, // 点击行
                     };
                 }} />
@@ -192,6 +194,7 @@ function List(props) {
                         message.error("请选择主字典管理")
                         return;
                     }
+
                     props.history.push({ pathname: "/admin/dic/infoedit", query: { typeid } })
                 }}
                 style={{ margin: "1rem 0" }}
