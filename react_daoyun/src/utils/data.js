@@ -537,12 +537,29 @@ export function delMenuById(selfKey) {
 
 
 //role
+
+
 const roleList = 'roleList';
 
 export function initRole() {
-    var List = init(roleList);
+    const roleData = [
+        {
+            id: 1,
+            role: "管理员",
+            authority: ["用户管理", "课程管理", "系统参数", "组织结构", "菜单管理", "角色权限", "字典管理"]
+        }, {
+            id: 2,
+            role: "教师",
+            authority: ["系统参数", "组织结构"]
+        }
+    ];
+
+    // var List = init(roleList);
+    var List = get(roleList);
+
     if (List == null) {
-        return List;
+        set(roleList, roleData);
+        List = roleData;
     }
     var l = [];
     var data = '';
