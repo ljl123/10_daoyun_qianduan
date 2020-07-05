@@ -39,13 +39,15 @@ export function getParams(){
     })
 }
 
-function List(props) {
+function List(props) { 
     const [dataSource, setDataSource] = useState([]);
     useEffect(() => {
         getParams();
-        var data = initParams();
-        //console.log("params"+data[0].value);
-        setDataSource(data);
+        setTimeout(() => {
+            var data = initParams();
+            console.log("data"+data)
+            setDataSource(data);
+          }, 1000)
     }, []);
     
     const columns = [{
