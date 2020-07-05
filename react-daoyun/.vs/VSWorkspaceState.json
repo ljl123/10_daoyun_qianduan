@@ -1,0 +1,16 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\src",
+    "\\src\\pages",
+    "\\src\\pages\\admin",
+    "\\src\\pages\\admin\\dic",
+    "\\src\\pages\\admin\\lesson",
+    "\\src\\pages\\admin\\menu",
+    "\\src\\pages\\admin\\users",
+    "\\src\\services",
+    "\\src\\utils"
+  ],
+  "SelectedNode": "\\src\\pages\\admin\\users\\Edit.js",
+  "PreviewInSolutionExplorer": false
+}
